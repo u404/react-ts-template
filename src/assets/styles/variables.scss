@@ -1,0 +1,119 @@
+/* 响应式控制 */
+
+@mixin screen-mobile {
+  @media screen and (max-width: 899px) {
+    @content;
+  }
+}
+
+@mixin screen-md {
+  @media screen and (min-width: 900px) {
+    @content;
+  }
+}
+
+@mixin screen-lg {
+  @media screen and (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin screen-xl {
+  @media screen and (min-width: 1600px) {
+    @content;
+  }
+}
+
+/* 快捷辅助 */
+
+// 将元素可点击区域放大至两倍，而不影响元素大小
+@mixin box-x2($withoutPosition: 0) {
+  @if ($withoutPosition == 0) {
+    position: relative;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+  }
+}
+
+@mixin box-abs-full {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@mixin box-flex($jus: flex-start, $items: flex-start) {
+  display: flex;
+  justify-content: $jus;
+  align-items: $items;
+}
+
+@mixin box-flex-column($jus: flex-start, $items: flex-start) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $jus;
+  align-items: $items;
+}
+
+@mixin box-flex-center {
+  @include box-flex(center, center);
+}
+
+@mixin box-grid($column: 2) {
+  display: grid;
+  grid-template-columns: repeat($column, minmax(0, 1fr));
+}
+
+@mixin bg($url: none, $size: contain) {
+  background: $url center no-repeat;
+  background-size: $size;
+}
+
+@mixin icon($url, $width: 16px) {
+  width: $width;
+  height: $width;
+  display: inline-block;
+  @include bg($url);
+}
+
+@mixin text-muti-line($line: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin clickable {
+  &:active {
+    opacity: 0.7;
+  }
+
+  &:disabled,
+  &.disabled,
+  &[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  @include clickable;
+}
